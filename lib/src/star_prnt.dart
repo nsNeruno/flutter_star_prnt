@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_star_prnt/src/enums.dart';
 import 'package:flutter_star_prnt/src/portInfo.dart';
@@ -27,8 +26,8 @@ class StarPrnt {
 
   /// Check status of printer. Have specify [portName] and [emulation]. Returns [PrinterResponseStatus]. Use [StarMicronicsUtilities] to find suitable emulations.
   static Future<PrinterResponseStatus> getStatus({
-    @required String portName,
-    @required String emulation,
+    required String portName,
+    required String emulation,
   }) async {
     dynamic result = await _channel.invokeMethod('checkStatus', {
       'portName': portName,
@@ -41,9 +40,9 @@ class StarPrnt {
 
   /// Sends [PrintCommands] to the printer. Have to specify [portName] and [emulation]. Returns [PrinterResponseStatus]
   static Future<PrinterResponseStatus> sendCommands({
-    @required String portName,
-    @required String emulation,
-    @required PrintCommands printCommands,
+    required String portName,
+    required String emulation,
+    required PrintCommands printCommands,
   }) async {
     dynamic result = await _channel.invokeMethod('print', {
       'portName': portName,
@@ -58,9 +57,9 @@ class StarPrnt {
   /// sends commands to printer to run
   @Deprecated('Use sendCommands instead.')
   static Future<dynamic> print({
-    @required String portName,
-    @required String emulation,
-    @required PrintCommands printCommands,
+    required String portName,
+    required String emulation,
+    required PrintCommands printCommands,
   }) async {
     dynamic result = await _channel.invokeMethod('print', {
       'portName': portName,
@@ -73,8 +72,8 @@ class StarPrnt {
   /// Check status of printer
   @Deprecated('Use getStatus instead.')
   static Future<dynamic> checkStatus({
-    @required String portName,
-    @required String emulation,
+    required String portName,
+    required String emulation,
   }) async {
     dynamic result = await _channel.invokeMethod('checkStatus', {
       'portName': portName,

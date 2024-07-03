@@ -1,18 +1,17 @@
 import 'package:collection/collection.dart';
-import 'package:flutter/foundation.dart';
 // Credits to https://github.com/ImTung
 
 /// Object representation of categories printers group by product line
 class StarMicronicsModel {
   /// Printer's product line
-  String name;
+  String? name;
 
   /// Printer's emulation
-  String emulation;
+  String? emulation;
 
   /// Model in the product line
   List<String> models;
-  StarMicronicsModel({this.name, this.emulation, @required this.models,});
+  StarMicronicsModel({this.name, this.emulation, required this.models,});
 }
 
 /// Static list of [StarMicronicsModel]
@@ -141,7 +140,7 @@ final List<StarMicronicsModel> starMicronicsModels = [
 /// Helper class to handle different type of printers
 class StarMicronicsUtilities {
   /// Detects the [modelName] of the printer and return [StarMicronicsModel], returns [null] if not found
-  static StarMicronicsModel detectEmulation({String modelName}) {
+  static StarMicronicsModel? detectEmulation({String? modelName}) {
     if (modelName != null && modelName.isNotEmpty) {
       return starMicronicsModels.firstWhereOrNull(
         (starMicronicsModel) =>

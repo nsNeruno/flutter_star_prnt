@@ -1,16 +1,16 @@
 /// Contains info of the printer connection
 class PortInfo {
   /// MacAdress of printer
-  String macAddress;
+  String? macAddress;
 
   /// Model name of printer
-  String modelName;
+  String? modelName;
 
   /// Port connection of printer, use this to connect to the printer
-  String portName;
+  String? portName;
 
   /// USB Serial number of usb printers
-  String usbSerialNumber;
+  String? usbSerialNumber;
 
   PortInfo(dynamic port) {
     if (port.containsKey('macAddress')) this.macAddress = port['macAddress'];

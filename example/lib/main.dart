@@ -21,26 +21,31 @@ class _MyAppState extends State<MyApp> {
     super.initState();
   }
 
-  Future<Uint8List> _capturePng() async {
+  Future<Uint8List?> _capturePng() async {
     try {
-      RenderRepaintBoundary boundary = _globalKey.currentContext
-          .findRenderObject() as RenderRepaintBoundary;
-      ui.Image image = await boundary.toImage(pixelRatio: 3.0);
-      ByteData byteData =
-          await image.toByteData(format: ui.ImageByteFormat.png);
-      final pngBytes = byteData.buffer.asUint8List();
-      return pngBytes;
+      final renderObject = _globalKey.currentContext?.findRenderObject();
+      if (renderObject is RenderRepaintBoundary) {
+        final boundary = renderObject;
+        ui.Image image = await boundary.toImage(pixelRatio: 3.0);
+        ByteData? byteData =
+            await image.toByteData(format: ui.ImageByteFormat.png);
+        final pngBytes = byteData?.buffer.asUint8List();
+        return pngBytes;
+      }
+      return null;
     } catch (e) {
       print(e);
       return Uint8List(0);
     }
   }
 
-  String emulationFor(String modelName) {
+  String? emulationFor(String modelName) {
     String emulation = 'StarGraphic';
     if (modelName != '') {
-      final em = StarMicronicsUtilities.detectEmulation(modelName: modelName);
-      emulation = em.emulation;
+      final em = StarMicronicsUtilities.detectEmulation(modelName: modelName)?.emulation;
+      if (em != null) {
+        emulation = em;
+      }
     }
     return emulation;
   }
@@ -56,14 +61,8 @@ class _MyAppState extends State<MyApp> {
               onPressed: () async {
                 List<PortInfo> list =
                     await StarPrnt.portDiscovery(StarPortType.All);
-                print(list);
                 list.forEach((port) async {
-                  print(port.portName);
                   if (port.portName?.isNotEmpty != null) {
-                    print(await StarPrnt.getStatus(
-                      portName: port.portName,
-                      emulation: emulationFor(port.modelName,),
-                    ));
 
                     PrintCommands commands = PrintCommands();
                     String raster = "        Star Clothing Boutique\n" +
@@ -93,10 +92,6 @@ class _MyAppState extends State<MyApp> {
                         "Within 30 days with receipt\n" +
                         "And tags attached\n";
                     commands.appendBitmapText(text: raster);
-                    print(await StarPrnt.sendCommands(
-                        portName: port.portName,
-                        emulation: emulationFor(port.modelName,),
-                        printCommands: commands));
                   }
                 });
               },
@@ -111,19 +106,11 @@ class _MyAppState extends State<MyApp> {
                 list.forEach((port) async {
                   print(port.portName);
                   if (port.portName?.isNotEmpty != null) {
-                    print(await StarPrnt.getStatus(
-                      portName: port.portName,
-                      emulation: emulationFor(port.modelName,),
-                    ));
 
                     PrintCommands commands = PrintCommands();
                     commands.appendBitmap(
                         path:
                             'https://c8.alamy.com/comp/MPCNP1/camera-logo-design-photograph-logo-vector-icons-MPCNP1.jpg');
-                    print(await StarPrnt.sendCommands(
-                        portName: port.portName,
-                        emulation: emulationFor(port.modelName,),
-                        printCommands: commands));
                   }
                 });
                 setState(() {
@@ -148,6 +135,7 @@ class _MyAppState extends State<MyApp> {
             TextButton(
               onPressed: () async {
                 final img = await _capturePng();
+                if (img == null) { return; }
                 setState(() {
                   isLoading = true;
                 });
@@ -157,12 +145,8 @@ class _MyAppState extends State<MyApp> {
                 print(list);
 
                 list.forEach((port) async {
-                  print(port.portName);
-                  if (port.portName.isNotEmpty) {
-                    print(await StarPrnt.getStatus(
-                      portName: port.portName,
-                      emulation: emulationFor(port.modelName,),
-                    ));
+                  final portName = port.portName;
+                  if (portName?.isNotEmpty ?? false) {
 
                     PrintCommands commands = PrintCommands();
                     commands.appendBitmapByte(
@@ -171,10 +155,6 @@ class _MyAppState extends State<MyApp> {
                       bothScale: true,
                       alignment: StarAlignmentPosition.Left,
                     );
-                    print(await StarPrnt.sendCommands(
-                        portName: port.portName,
-                        emulation: emulationFor(port.modelName,),
-                        printCommands: commands));
                   }
                 });
                 setState(() {

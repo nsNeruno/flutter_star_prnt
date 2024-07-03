@@ -36,13 +36,13 @@ class PrintCommands {
   /// [StarAlignmentPosition] sets image alignment.
   /// [StarBitmapConverterRotation] set image rotation.
   appendBitmap({
-    @required String path,
+    required String path,
     bool diffusion = true,
     int width = 576,
     bool bothScale = true,
-    int absolutePosition,
-    StarAlignmentPosition alignment,
-    StarBitmapConverterRotation rotation,
+    int? absolutePosition,
+    StarAlignmentPosition? alignment,
+    StarBitmapConverterRotation? rotation,
   }) {
     Map<String, dynamic> command = {
       "appendBitmap": path,
@@ -64,13 +64,13 @@ class PrintCommands {
   /// [StarAlignmentPosition] sets image alignment.
   /// [StarBitmapConverterRotation] set image rotation.
   appendBitmapByte({
-    @required Uint8List byteData,
+    required Uint8List byteData,
     bool diffusion = true,
     int width = 576,
     bool bothScale = true,
-    int absolutePosition,
-    StarAlignmentPosition alignment,
-    StarBitmapConverterRotation rotation,
+    int? absolutePosition,
+    StarAlignmentPosition? alignment,
+    StarBitmapConverterRotation? rotation,
   }) {
     Map<String, dynamic> command = {
       "appendBitmapByteArray": byteData,
@@ -95,17 +95,17 @@ class PrintCommands {
   /// logicalSize [Size] is the size of the device the widget is made into.
   /// imageSize [Size] is the size of image generated.
   /// sets the [TextDirection].
-  appendBitmapWidget({
-    @required Widget widget,
+  void appendBitmapWidget({
+    required Widget widget,
     bool diffusion = true,
     int width = 576,
     bool bothScale = true,
-    int absolutePosition,
-    StarAlignmentPosition alignment,
-    StarBitmapConverterRotation rotation,
-    Duration wait,
-    Size logicalSize,
-    Size imageSize,
+    int? absolutePosition,
+    StarAlignmentPosition? alignment,
+    StarBitmapConverterRotation? rotation,
+    Duration? wait,
+    Size? logicalSize,
+    Size? imageSize,
     TextDirection textDirection = TextDirection.ltr,
   }) {
     createImageFromWidget(
@@ -138,14 +138,14 @@ class PrintCommands {
   /// [StarAlignmentPosition] sets image alignment.
   /// [StarBitmapConverterRotation] set image rotation.
   appendBitmapText({
-    @required String text,
-    int fontSize,
+    required String text,
+    int? fontSize,
     bool diffusion = true,
-    int width,
+    int? width,
     bool bothScale = true,
-    int absolutePosition,
-    StarAlignmentPosition alignment,
-    StarBitmapConverterRotation rotation,
+    int? absolutePosition,
+    StarAlignmentPosition? alignment,
+    StarBitmapConverterRotation? rotation,
   }) {
     Map<String, dynamic> command = {
       "appendBitmapText": text,
@@ -177,11 +177,11 @@ class PrintCommands {
   /// logicalSize [Size] is the size of the device the widget is made into.
   /// imageSize [Size] is the size of image generated.
   /// sets the [TextDirection].
-  static Future<Uint8List> createImageFromWidget(
+  static Future<Uint8List?> createImageFromWidget(
     Widget widget, {
-    Duration wait,
-    Size logicalSize,
-    Size imageSize,
+    Duration? wait,
+    Size? logicalSize,
+    Size? imageSize,
     TextDirection textDirection = TextDirection.ltr,
   }) async {
     final RenderRepaintBoundary repaintBoundary = RenderRepaintBoundary();
@@ -237,9 +237,9 @@ class PrintCommands {
     final ui.Image image = await repaintBoundary.toImage(
       pixelRatio: imageSize.width / logicalSize.width,
     );
-    final ByteData byteData =
+    final ByteData? byteData =
         await image.toByteData(format: ui.ImageByteFormat.png);
 
-    return byteData?.buffer?.asUint8List();
+    return byteData?.buffer.asUint8List();
   }
 }

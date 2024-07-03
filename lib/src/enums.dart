@@ -51,15 +51,15 @@ enum StarEncoding {
 
 ///Converts enum to String
 extension ExtendedEncoding on StarEncoding {
-  String get text => const {
-        StarEncoding.USASCII: "US-ASCII",
-        StarEncoding.Windows1252: "Windows-1252",
-        StarEncoding.ShiftJIS: "Shift-JIS",
-        StarEncoding.Windows1251: "Windows-1251",
-        StarEncoding.GB2312: "GB2312",
-        StarEncoding.Big5: "Big5",
-        StarEncoding.UTF8: "UTF-8",
-      }[this];
+  String? get text => const {
+    StarEncoding.USASCII: "US-ASCII",
+    StarEncoding.Windows1252: "Windows-1252",
+    StarEncoding.ShiftJIS: "Shift-JIS",
+    StarEncoding.Windows1251: "Windows-1251",
+    StarEncoding.GB2312: "GB2312",
+    StarEncoding.Big5: "Big5",
+    StarEncoding.UTF8: "UTF-8",
+  }[this];
 }
 
 ///Enum for CodePageType

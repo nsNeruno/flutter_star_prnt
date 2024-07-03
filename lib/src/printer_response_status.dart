@@ -4,8 +4,6 @@
 
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
-
 /// Response class for printer status
 class PrinterResponseStatus {
   /// Whether the printer is offline
@@ -21,7 +19,7 @@ class PrinterResponseStatus {
   final bool receiptPaperEmpty;
 
   /// Error response from printer
-  final String errorMessage;
+  final String? errorMessage;
 
   /// Status command after sent to printer
   final bool isSuccess;
@@ -30,22 +28,22 @@ class PrinterResponseStatus {
   final bool overTemp;
 
   /// Extra info on printer status
-  final String infoMessage;
+  final String? infoMessage;
 
   /// Printer model name
-  final String modelName;
+  final String? modelName;
 
   /// Printer firmware version
-  final String firmwareVersion;
+  final String? firmwareVersion;
 
   PrinterResponseStatus({
-    @required this.offline,
-    @required this.coverOpen,
-    @required this.cutterError,
-    @required this.receiptPaperEmpty,
+    required this.offline,
+    required this.coverOpen,
+    required this.cutterError,
+    required this.receiptPaperEmpty,
     this.errorMessage,
-    @required this.isSuccess,
-    @required this.overTemp,
+    required this.isSuccess,
+    required this.overTemp,
     this.infoMessage,
     this.modelName,
     this.firmwareVersion,
@@ -53,16 +51,16 @@ class PrinterResponseStatus {
 
   ///Creates a copy of [PrinterResponseStatus] but with given field replace with new values
   PrinterResponseStatus copyWith({
-    bool offline,
-    bool coverOpen,
-    bool cutterError,
-    bool receiptPaperEmpty,
-    String errorMessage,
-    bool isSuccess,
-    bool overTemp,
-    String infoMessage,
-    String modelName,
-    String firmwareVersion,
+    bool? offline,
+    bool? coverOpen,
+    bool? cutterError,
+    bool? receiptPaperEmpty,
+    String? errorMessage,
+    bool? isSuccess,
+    bool? overTemp,
+    String? infoMessage,
+    String? modelName,
+    String? firmwareVersion,
   }) {
     return PrinterResponseStatus(
       offline: offline ?? this.offline,
