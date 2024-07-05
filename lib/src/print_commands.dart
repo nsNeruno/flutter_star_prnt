@@ -16,17 +16,17 @@ class PrintCommands {
   }
 
   /// sets the encoding for text prints, [StarEncoding] available is different for each printer
-  appendEncoding(StarEncoding encoding) {
+  void appendEncoding(StarEncoding encoding) {
     this._commands.add({"appendEncoding": encoding.text});
   }
 
   /// run command on printer cuter, [StarCutPaperAction] available is different for each printer
-  appendCutPaper(StarCutPaperAction action) {
+  void appendCutPaper(StarCutPaperAction action) {
     this._commands.add({"appendCutPaper": action.text});
   }
 
   /// open cash drawer, [actionNumber] needed to based on the printer port
-  openCashDrawer(int actionNumber) {
+  void openCashDrawer(int actionNumber) {
     this._commands.add({"openCashDrawer": actionNumber});
   }
 
@@ -35,7 +35,7 @@ class PrintCommands {
   /// Sets [absolutePosition] image absolute position.
   /// [StarAlignmentPosition] sets image alignment.
   /// [StarBitmapConverterRotation] set image rotation.
-  appendBitmap({
+  void appendBitmap({
     required String path,
     bool diffusion = true,
     int width = 576,
@@ -63,7 +63,7 @@ class PrintCommands {
   /// Sets [absolutePosition] image absolute position.
   /// [StarAlignmentPosition] sets image alignment.
   /// [StarBitmapConverterRotation] set image rotation.
-  appendBitmapByte({
+  void appendBitmapByte({
     required Uint8List byteData,
     bool diffusion = true,
     int width = 576,
@@ -95,7 +95,7 @@ class PrintCommands {
   /// logicalSize [Size] is the size of the device the widget is made into.
   /// imageSize [Size] is the size of image generated.
   /// sets the [TextDirection].
-  appendBitmapWidget({
+  void appendBitmapWidget({
     required BuildContext context,
     required Widget widget,
     bool diffusion = true,
@@ -139,7 +139,7 @@ class PrintCommands {
   /// Sets [absolutePosition] image absolute position.
   /// [StarAlignmentPosition] sets image alignment.
   /// [StarBitmapConverterRotation] set image rotation.
-  appendBitmapText({
+  void appendBitmapText({
     required String text,
     int? fontSize,
     bool diffusion = true,
@@ -165,12 +165,12 @@ class PrintCommands {
   }
 
   /// pushes a manual [command] into the command list
-  push(Map<String, dynamic> command) {
+  void push(Map<String, dynamic> command) {
     this._commands.add(command);
   }
 
   /// clear all commands in command list
-  clear() {
+  void clear() {
     this._commands.clear();
   }
 
@@ -202,7 +202,7 @@ class PrintCommands {
         child: repaintBoundary,
       ),
       configuration: ViewConfiguration(
-        size: logicalSize,
+        logicalConstraints: BoxConstraints.tight(logicalSize,),
         devicePixelRatio: 1.0,
       ),
     );
